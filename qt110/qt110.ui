@@ -1,25 +1,25 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>qt110Class</class>
- <widget class="QWidget" name="qt110Class" >
-  <property name="objectName" >
-   <string notr="true">qt110Class</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QWidget" name="qt110Class">
+  <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>600</width>
-	<height>400</height>
+    <x>0</x>
+    <y>0</y>
+    <width>965</width>
+    <height>607</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>qt110</string>
+  <property name="windowTitle">
+   <string>2016年工程领袖计划项目----图像所</string>
   </property>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources>
-   <include location="qt110.qrc"/>
+  <include location="qt110.qrc"/>
  </resources>
  <connections/>
-</UI>
+ <slots>
+  <slot>closeButton()</slot>
+ </slots>
+</ui>
