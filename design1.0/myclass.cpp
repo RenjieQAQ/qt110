@@ -1,5 +1,8 @@
 #include "myclass.h"
+/*
 
+
+*/
 char guideStyleSheet[] = "QListWidget { background-color: rgb(61, 74, 83); "
 										"color: rgb(255, 255, 255);border-style: none;  "
 										" font: 14pt \"ĞÂËÎÌå\" ; "
