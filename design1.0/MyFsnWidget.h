@@ -76,8 +76,8 @@ public slots:
 	void testButtonClicked();
 	void test2ButtonClicked();
 	void saveButtonClicked();
-	void updateTable(const TCP_FSN_Msg * msg);
-	void updateTable(const TCP_FSN_Msg_Sml * msg);
+//	void updateTable(const TCP_FSN_Msg * msg);
+//	void updateTable(const TCP_FSN_Msg_Sml * msg);
 	void updateTable(billInf& msg);
 
 	void openDialog(QTableWidgetItem*);

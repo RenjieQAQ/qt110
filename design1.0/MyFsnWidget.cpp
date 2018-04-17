@@ -107,7 +107,7 @@ void MyFsnWidget::saveButtonClicked() {
 	gzh_list->clear();
 	for (int i = 0; i < fsnTable->rowCount(); i++) {
 		//gzh_list->insert(gzh_list->begin(), *(gzh*)fsnTable->item(i,6)->text().toLatin1().data());
-		gzh_list->insert(gzh_list->begin(), fsnTable->item(i, 6)->text());
+		gzh_list->insert(gzh_list->begin(), fsnTable->item(i, 7)->text());
 	//	emit debug(fsnTable->item(i, 6)->text());
 	}
 }
@@ -118,6 +118,15 @@ void MyFsnWidget::setChecked(int row, QColor color) {
 		fsnTable->item(row, i)->setBackgroundColor(color);
 	}
 }
+bool strCompare(QString& str1, QString& str2) {
+	bool temp = true;
+	for (int i = 0; i < str1.length(); i++) {
+		if (str1.at(i) != str2.at(i)) {
+			temp = false;
+		}
+	}
+	return temp;
+}
 
 bool MyFsnWidget::compareGzh(QString& str) {
 	int res = 0;
@@ -125,6 +134,7 @@ bool MyFsnWidget::compareGzh(QString& str) {
 	{
 	//	emit debug(*iter);
 	//	emit debug(str);
+		//if( strCompare(*iter,str) ){
 		if (*iter == str) {
 			res = 1;
 		}
@@ -136,7 +146,7 @@ bool MyFsnWidget::compareGzh(QString& str) {
 }
 void MyFsnWidget::test2ButtonClicked() {
 	for (int i = 0; i < fsnTable->rowCount(); i++) {
-		if (compareGzh(fsnTable->item(i, 6)->text()))
+		if (compareGzh(fsnTable->item(i, 7)->text()))
 			setChecked(i, QColor(91, 140, 71));//green
 		else {
 			setChecked(i, QColor(251, 85, 78));//red
@@ -146,90 +156,6 @@ void MyFsnWidget::test2ButtonClicked() {
 }
 
 
-/*
-槽函数——接收到新fsn包
-*/
-void MyFsnWidget::updateTable(const TCP_FSN_Msg * msg) {
-	QString str;
-	int row = fsnTable->rowCount() - 1;
-	//面额
-	str = QString("%1").arg(msg->fsn_body.Valuate, 0, 10);
-	fsnTable->setItem(row, 0, new QTableWidgetItem(str));
-	//版本
-	str = verTable[msg->fsn_body.Ver];
-	fsnTable->setItem(row, 1, new QTableWidgetItem(str));
-	//真伪
-	str = tfTable[msg->fsn_body.tfFlag];
-	fsnTable->setItem(row, 2, new QTableWidgetItem(str));
-	//方向
-	str = QString("%1").arg(msg->debugmsg.derection, 0, 10);
-	fsnTable->setItem(row, 3, new QTableWidgetItem(str));
-	//长度
-	str = QString("%1").arg(msg->debugmsg.length, 0, 10);
-	fsnTable->setItem(row, 4, new QTableWidgetItem(str));
-	//错误码
-	str = QString("%1").arg(msg->fsn_body.ErrorCode[0], 0, 10);
-	fsnTable->setItem(row, 5, new QTableWidgetItem(str));
-	//冠字号
-	str = "";
-	for (int i = 0;i < msg->fsn_body.CharNUM;i++) {
-		str += msg->fsn_body.SN0[i];
-	}
-	fsnTable->setItem(row, 6, new QTableWidgetItem(str));
-	fsnTable->insertRow(fsnTable->rowCount());
-	fsnTable->scrollToBottom();
-}
-void MyFsnWidget::updateTable(const TCP_FSN_Msg_Sml * msg) {
-	QString str;
-
-	fsnTable->insertRow(fsnTable->rowCount());
-	Qt::ItemFlags flag = (Qt::ItemIsSelectable) | (Qt::ItemIsEnabled);
-	int row = fsnTable->rowCount() - 1;
-	//面额
-	str = QString("%1").arg(msg->fsn_body.Valuate, 0, 10);
-	fsnTable->setItem(row, 0, new QTableWidgetItem(str));
-	fsnTable->item(row, 0)->setTextAlignment(Qt::AlignCenter);
-	fsnTable->item(row, 0)->setFlags(flag);
-	//版本
-	str = verTable[msg->fsn_body.Ver];
-	fsnTable->setItem(row, 1, new QTableWidgetItem(str));
-	fsnTable->item(row, 1)->setTextAlignment(Qt::AlignCenter);
-	fsnTable->item(row, 1)->setFlags(flag);
-	//方向
-	str = QString("%1").arg(msg->debugmsg.derection, 0, 10);
-	fsnTable->setItem(row, 2, new QTableWidgetItem(str));
-	fsnTable->item(row, 2)->setTextAlignment(Qt::AlignCenter);
-	fsnTable->item(row, 2)->setFlags(flag);
-	//长度
-	str = QString("%1").arg(msg->debugmsg.length, 0, 10);
-	fsnTable->setItem(row, 3, new QTableWidgetItem(str));
-	fsnTable->item(row, 3)->setTextAlignment(Qt::AlignCenter);
-	fsnTable->item(row, 3)->setFlags(flag);
-	
-	//错误码
-	str = QString("%1").arg(msg->fsn_body.ErrorCode[0], 0, 10);
-	fsnTable->setItem(row, 4, new QTableWidgetItem(str));
-	fsnTable->item(row, 4)->setTextAlignment(Qt::AlignCenter);
-	fsnTable->item(row, 4)->setFlags(flag);
-	//保留字
-	str = QString("%1").arg(msg->debugmsg.reserve, 0, 10);
-	fsnTable->setItem(row, 5, new QTableWidgetItem(str));
-	fsnTable->item(row, 5)->setTextAlignment(Qt::AlignCenter);
-	fsnTable->item(row, 5)->setFlags(flag);
-	//冠字号
-	str = "";
-	for (int i = 0;i < msg->fsn_body.CharNUM;i++) {
-		str += msg->fsn_body.SN0[i];
-	}
-	fsnTable->setItem(row, 6, new QTableWidgetItem(str));
-	fsnTable->item(row, 6)->setTextAlignment(Qt::AlignCenter);
-	//img
-	QLabel *label = new QLabel("");
-	label->setPixmap(QPixmap("icon/min.png").scaled(100,30));
-	fsnTable->setCellWidget(row, 7, label);
-
-	fsnTable->scrollToBottom();
-}
 
 
 

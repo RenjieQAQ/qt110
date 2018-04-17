@@ -64,7 +64,7 @@ MyClass::MyClass(QWidget *parent)
 	guideList = new QListWidget;
 	debugListItem = new QListWidgetItem(QStringLiteral("通信与调试"), guideList);
 	debugListItem->setTextAlignment(Qt::AlignCenter);
-	fsnListItem = new QListWidgetItem(QStringLiteral("FSN系统"), guideList);
+	fsnListItem = new QListWidgetItem(QStringLiteral("算法调试"), guideList);
 	fsnListItem->setTextAlignment(Qt::AlignCenter);
 	cisListItem = new QListWidgetItem(QStringLiteral("CIS调试"), guideList);
 

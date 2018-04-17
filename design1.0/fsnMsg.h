@@ -97,6 +97,7 @@ typedef struct MoneyResult
 	int index;
 	int reserved;
 	int lineNum;				//白光图像行数
+	int angle;
 	unsigned char refuseFlag;	//据识标志，0正常，1据识，没有正确识别，过斜或其他原因
 	unsigned char noteType;		//币种信息
 	int pos[11];
